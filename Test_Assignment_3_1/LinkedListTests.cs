@@ -117,22 +117,22 @@ namespace Test_Assignment_3
             Assert.False(this.linkedList.IsEmpty());
 
             // Test the size is 4
-            Assert.Equals(5, this.linkedList.Size());
+            Assert.AreEqual(5, this.linkedList.Size());
 
             // Test the first node value is a
-            Assert.Equals("a", this.linkedList.Retrieve(0));
+            Assert.AreEqual("a", this.linkedList.Retrieve(0));
 
             // Test the second node value is b
-            Assert.Equals("b", this.linkedList.Retrieve(1));
+            Assert.AreEqual("b", this.linkedList.Retrieve(1));
 
             // Test the third node value is e
-            Assert.Equals("e", this.linkedList.Retrieve(2));
+            Assert.AreEqual("e", this.linkedList.Retrieve(2));
 
             // Test the third node value is c
-            Assert.Equals("c", this.linkedList.Retrieve(3));
+            Assert.AreEqual("c", this.linkedList.Retrieve(3));
 
             // Test the fourth node value is d
-            Assert.Equals("d", this.linkedList.Retrieve(4));
+            Assert.AreEqual("d", this.linkedList.Retrieve(4));
         }
 
         //Tests replacing existing nodes data.
@@ -192,16 +192,16 @@ namespace Test_Assignment_3
             Assert.False(this.linkedList.IsEmpty());
 
             // Test the size is 4
-            Assert.Equals(3, this.linkedList.Size());
+            Assert.AreEqual(3, this.linkedList.Size());
 
             // Test the first node value is a
-            Assert.Equals("a", this.linkedList.Retrieve(0));
+            Assert.AreEqual("a", this.linkedList.Retrieve(0));
 
             // Test the second node value is b
-            Assert.Equals("b", this.linkedList.Retrieve(1));
+            Assert.AreEqual("b", this.linkedList.Retrieve(1));
 
             // Test the fourth node value is d
-            Assert.Equals("d", this.linkedList.Retrieve(2));
+            Assert.AreEqual("d", this.linkedList.Retrieve(2));
         }
 
         //Tests finding and retrieving node in linked list.
@@ -228,5 +228,51 @@ namespace Test_Assignment_3
             string value = (string)this.linkedList.Retrieve(1);
             Assert.AreEqual("b", value);
         }
+        
+        [Test]
+        public void Insert_ThrowsException_WhenListIsEmpty()
+        {
+            Assert.Throws<NullReferenceException>(() => linkedList.Insert("data", 0));
+        }
+
+        [Test]
+        public void Insert_ThrowsException_WhenIndexIsGreaterThanSize()
+        {
+            linkedList.Append("a");
+            linkedList.Append("b");
+
+            Assert.Throws<IndexOutOfRangeException>(() => linkedList.Insert("data", 3));
+        }
+
+        [Test]
+        public void Insert_ThrowsException_WhenIndexIsNegative()
+        {
+            linkedList.Append("a");
+            linkedList.Append("b");
+
+            Assert.Throws<IndexOutOfRangeException>(() => linkedList.Insert("data", -1));
+        }
+        
+        [Test]
+        public void Retrieve_ThrowsException_WhenIndexIsNegative()
+        {
+            Assert.Throws<IndexOutOfRangeException>(() => linkedList.Retrieve(-1));
+        }
+
+        [Test]
+        public void Retrieve_ThrowsException_WhenListIsEmpty()
+        {
+            Assert.Throws<NullReferenceException>(() => linkedList.Retrieve(0));
+        }
+
+        [Test]
+        public void Retrieve_ThrowsException_WhenIndexIsOutOfRange()
+        {
+            linkedList.Append("a");
+            linkedList.Append("b");
+
+            Assert.Throws<IndexOutOfRangeException>(() => linkedList.Retrieve(2));
+        }
+
     }
 }

@@ -45,6 +45,7 @@ namespace Assignment_3_skeleton
         public void Clear()
         {
             Head = null;
+            Count = 0;
         }
         
         public bool Contains(object data)
@@ -65,10 +66,7 @@ namespace Assignment_3_skeleton
 
             return false;
         }
-
-        //Removes element at index from list, reducing the size.
-        //parameter index Index of element to remove.
-        //throws exception IndexOutOfBoundsException Thrown if index is negative or past the size - 1.
+        
         public void Delete(int index)
         {
             if(IsClear)
@@ -85,15 +83,18 @@ namespace Assignment_3_skeleton
             if (index == 0)
             {
                 Head = current.Next;
-                
             }
             else
             {
-                for (var i = 0; i < index; i++)
+                for (var i = 0; i < index - 1; i++)
                 {
-                    current
+                    current = current.Next;
                 }
+
+                current.Next = current.Next.Next;
             }
+
+            Count--;
 
         }
         
@@ -118,9 +119,38 @@ namespace Assignment_3_skeleton
             return -1;
         }
 
+        //Adds a new element at a specific position.
+        //parameter data Data that element is to contain.
+        //parameter index Index to add new element at.
+        //throws exception IndexOutOfRangeException Thrown if index is negative or past the size of the list.
         public void Insert(object data, int index)
         {
-            throw new NotImplementedException();
+            if(IsClear)
+                throw new NullReferenceException("List is empty"); 
+            
+            if (index > Count)
+                throw new IndexOutOfRangeException("Index provided is greater than the size of the list");
+            
+            if (index < 0)
+                throw new IndexOutOfRangeException("Index must be greater than -1");
+
+            var current = Head;
+            if (index == 0)
+            {
+                var newNode = new Node(data, Head);
+                Head = newNode;
+            }
+            else
+            {
+                for (var i = 0; i < index - 1; i++)
+                {
+                    current = current.Next;
+                }
+
+                current.Next = new Node(data, current.Next);
+            }
+            
+            Count++;
         }
 
         public bool IsEmpty()
