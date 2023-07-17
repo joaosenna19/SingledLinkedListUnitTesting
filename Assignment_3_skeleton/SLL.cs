@@ -46,20 +46,76 @@ namespace Assignment_3_skeleton
         {
             Head = null;
         }
-
+        
         public bool Contains(object data)
         {
-            throw new NotImplementedException();
+            if (IsClear)
+                return false;
+            
+            var current = Head;
+            while (current.Next != null)
+            {
+                if (current.Data == data)
+                {
+                    return true;
+                }
+
+                current = current.Next;
+            }
+
+            return false;
         }
 
+        //Removes element at index from list, reducing the size.
+        //parameter index Index of element to remove.
+        //throws exception IndexOutOfBoundsException Thrown if index is negative or past the size - 1.
         public void Delete(int index)
         {
-            throw new NotImplementedException();
-        }
+            if(IsClear)
+                throw new NullReferenceException("List is empty"); 
+            
+            if (index > Count)
+                throw new IndexOutOfRangeException("Index provided is greater than the size of the list");
+            
+            if (index < 0)
+                throw new IndexOutOfRangeException("Index must be greater than -1");
 
+            var current = Head;
+            
+            if (index == 0)
+            {
+                Head = current.Next;
+                
+            }
+            else
+            {
+                for (var i = 0; i < index; i++)
+                {
+                    current
+                }
+            }
+
+        }
+        
         public int IndexOf(object data)
         {
-            throw new NotImplementedException();
+            if (IsClear)
+                return -1;
+
+            var current = Head;
+            var index = 0;
+            while (current.Next != null)
+            {
+                if (current.Data == data)
+                {
+                    return index;
+                }
+        
+                index++;
+                current = current.Next;
+            }
+            
+            return -1;
         }
 
         public void Insert(object data, int index)
@@ -89,16 +145,40 @@ namespace Assignment_3_skeleton
             Count++;
 
         }
-
+        
         public void Replace(object data, int index)
         {
-            throw new NotImplementedException();
+            if (IsClear)
+                throw new NullReferenceException("List is empty");
+
+            if (index > Count)
+                throw new IndexOutOfRangeException("Index provided is greater than the size of the list");
+            
+            if (index < 0)
+                throw new IndexOutOfRangeException("Index must be greater than -1");
+
+            if (index == 0)
+            {
+                var newNode = new Node(data, null);
+                Head = newNode;
+            }
+            else
+            {
+                var current = Head;
+                for (var i = 0; i < index - 1; i++)
+                {
+                    current = current.Next;
+                }
+
+                current.Next = new Node(data, current.Next?.Next);
+            }
+            
         }
 
         public object Retrieve(int index)
         {
             if (index < 0)
-                throw new ArgumentOutOfRangeException("Index must be greater than -1");
+                throw new IndexOutOfRangeException("Index must be greater than -1");
 
             if (IsClear)
             {
@@ -109,10 +189,10 @@ namespace Assignment_3_skeleton
             
             for (var i = 0; i < index; i++)
             {
-                current = current.Next;
+                current = current.Next ?? throw new IndexOutOfRangeException("Index out of range");
             }
 
-            return current.Next.Data;
+            return current.Data;
         }
 
         public int Size()
